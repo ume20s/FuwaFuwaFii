@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class fuwafuwa : MonoBehaviour
 {
-    Rigidbody2D rb;
+    // 物理演算関連
+    Rigidbody2D rigidBody;
     float vForce = 20.0f;
     float maxSpeed = 10.0f;
     float threshold = 0.1f;
@@ -16,10 +17,8 @@ public class fuwafuwa : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // リジッドボディのコンポーネントを取得
-        rb = GetComponent<Rigidbody2D>();
-
-        // 効果音のコンポーネントを取得
+        // 各種コンポーネントを取得
+        rigidBody = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -40,17 +39,17 @@ public class fuwafuwa : MonoBehaviour
         // 加速装置！
         v.x = xx * vForce;
         v.y = yy * vForce;
-        rb.AddForce(v);
+        rigidBody.AddForce(v);
 
         // スピードリミッター
-        float speed = Mathf.Abs(rb.velocity.magnitude);
+        float speed = Mathf.Abs(rigidBody.velocity.magnitude);
         if (speed > maxSpeed)
         {
-            rb.velocity = new Vector2(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x / 1.1f, rigidBody.velocity.y / 1.1f);
         }
     }
 
-    // 壁に衝突したとき
+    // 壁に衝突したら効果音
     void OnCollisionEnter2D(Collision2D collisio)
     {
         audioSource.PlayOneShot(vSe[Random.Range(0, 7)]);
