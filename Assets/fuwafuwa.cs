@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class fuwafuwa : MonoBehaviour
 {
@@ -9,8 +8,6 @@ public class fuwafuwa : MonoBehaviour
     float vForce = 20.0f;
     float maxSpeed = 10.0f;
     float threshold = 0.1f;
-
-    GameObject dt;
 
     // 効果音関連
     AudioSource audioSource;
@@ -29,18 +26,23 @@ public class fuwafuwa : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 移動方向感知用フラグ
         int xx = 0;
         int yy = 0;
         Vector2 v;
 
+        // スマホの傾きを感知
         if (Input.acceleration.x > threshold) xx = 1;
         if (Input.acceleration.x < -threshold) xx = -1;
         if (Input.acceleration.y > threshold) yy = 1;
         if (Input.acceleration.y < -threshold) yy = -1;
 
+        // 加速装置！
         v.x = xx * vForce;
         v.y = yy * vForce;
         rb.AddForce(v);
+
+        // スピードリミッター
         float speed = Mathf.Abs(rb.velocity.magnitude);
         if (speed > maxSpeed)
         {
