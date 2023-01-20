@@ -12,7 +12,11 @@ public class fuwafuwa : MonoBehaviour
 
     // 効果音関連
     AudioSource audioSource;
-    public AudioClip[] vSe = new AudioClip[7];
+    public AudioClip vTitleCall;
+    public AudioClip[] vSe = new AudioClip[14];
+
+    // 音声セレクト用
+    public static int vo;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +56,6 @@ public class fuwafuwa : MonoBehaviour
     // 壁に衝突したら効果音
     void OnCollisionEnter2D(Collision2D collisio)
     {
-        audioSource.PlayOneShot(vSe[Random.Range(0, 7)]);
+        audioSource.PlayOneShot(vSe[Random.Range(0, 7)+vo]);
     }
 }
